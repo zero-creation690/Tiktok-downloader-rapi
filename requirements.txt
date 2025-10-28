@@ -1,7 +1,0 @@
-Core dependency for extracting and downloading media
-​yt-dlp
-​ASGI server framework
-​fastapi
-​Required dependency for fastapi on vercel (uvicorn for local, starlette is its core)
-​uvicorn
-starlette
