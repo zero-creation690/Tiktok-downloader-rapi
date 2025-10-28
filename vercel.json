@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/tiktok.py",
+      "src": "api/download.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/api/tiktok(.*)",
-      "dest": "/api/tiktok.py"
+      "src": "/api/download",
+      "dest": "api/download.py"
     }
   ]
 }
