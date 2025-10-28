@@ -1,11 +1,7 @@
 {
   "functions": {
     "pages/api/download.js": {
-      // Increase max duration to 60 seconds (Pro/Enterprise) or 10 seconds (Hobby)
-      // Note: Check your Vercel plan limits.
-      "maxDuration": 60 
+      "maxDuration": 60
     }
-    // If you are using Next.js App Router:
-    // "app/api/download/route.js": { "maxDuration": 60 }
   }
 }
