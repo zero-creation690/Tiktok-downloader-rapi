@@ -37,7 +37,7 @@ def get_video_stream(url: str) -> Iterator[bytes]:
         raise HTTPException(status_code=500, detail=f"An unexpected internal error occurred: {e}")
 
 
-@app.get("/tiktok") # <-- CHANGED: The internal route now explicitly matches '/tiktok'
+@app.get("/") # <-- CRITICAL FIX: Reverting to the internal root route
 async def download_tiktok_video(
     tiktok_url: str = Query(..., description="The URL of the TikTok video to download.")
 ):
