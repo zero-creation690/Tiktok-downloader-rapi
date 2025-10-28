@@ -5,21 +5,21 @@ from fastapi.responses import StreamingResponse
 from typing import Iterator
 
 # Initialize the FastAPI application
-# This 'app' instance will be the handler Vercel invokes.
 app = FastAPI()
 
 # --- Utility Functions ---
 
 def get_video_stream(url: str) -> Iterator[bytes]:
     """
-    Simulates fetching and streaming the video content chunk by chunk.
-    This function handles the actual request and streaming.
+    Handles fetching and streaming the video content chunk by chunk.
     """
     try:
-        # Set stream=True for chunked downloading, crucial for serverless environments.
+        # We use the provided URL here as the target for streaming.
+        # Set stream=True for chunked downloading.
         response = requests.get(url, stream=True, timeout=30) 
         
         if response.status_code != 200:
+            print(f"Failed to fetch content from {url}. Status: {response.status_code}")
             # Raise an error if the content fetching failed
             raise HTTPException(status_code=400, detail=f"Failed to resolve video URL. Status: {response.status_code}")
         
@@ -37,17 +37,16 @@ def get_video_stream(url: str) -> Iterator[bytes]:
         raise HTTPException(status_code=500, detail=f"An unexpected internal error occurred: {e}")
 
 
-@app.get("/")
+@app.get("/tiktok") # <-- CHANGED: The internal route now explicitly matches '/tiktok'
 async def download_tiktok_video(
     tiktok_url: str = Query(..., description="The URL of the TikTok video to download.")
 ):
     """
     API endpoint to download a TikTok video.
-    Access this via: YOUR_VERCEL_URL/api/download?tiktok_url=...
+    Access this via: YOUR_VERCEL_URL/api/tiktok?tiktok_url=...
     """
     
-    # Placeholder: In a real app, complex logic resolves tiktok_url to direct_video_url.
-    # For now, we use the input URL as the target for streaming.
+    # Placeholder: Assuming the input URL is ready for streaming
     direct_video_url = tiktok_url 
     
     # Create a unique filename for the download
@@ -66,6 +65,3 @@ async def download_tiktok_video(
         headers=headers,
         media_type="video/mp4" 
     )
-
-# The 'app' variable is automatically detected by Vercel as the handler
-# No need for an explicit 'handler = app' line if it's named 'app'.
